@@ -1,0 +1,67 @@
+body{
+    margin: 0%;
+    padding: 0%;
+    background-color: beige;
+}
+
+h3{
+    font-family: cursive;
+    color: bisque;
+}
+
+
+.navbar{
+    box-shadow: 3px 2px 8px gray;
+    background: linear-gradient(to left, rgb(168, 168, 202),rgb(106, 158, 106))
+}
+.modalcontainer, .modalcontainer2{
+    display: none;
+    position: fixed;
+    z-index: 5;
+    left: 0%;
+    top: 0%;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+   
+    
+}
+.modal_over-lay{
+   animation-name: x;
+   animation-duration: 3s;
+   width: 50%;
+ margin-left: 20%;
+}
+
+.closebtn{
+    color: #ccc;
+    float: right;
+    font-size: 30px;
+}
+.closebtn:hover{
+    cursor: pointer;
+    color: black;
+}
+ #root{
+    color: rgb(3, 3, 3);
+   
+}
+#span{
+    display: none;
+}
+.list{
+   
+    margin-top: 3%;
+}
+.cont{
+    display: block'
+}
+
+.desc{
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: lighter;
+
+}
+/* .card{
+    
+} */

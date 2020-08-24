@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+ .modalcontainer{
+    display: none;
+    position: fixed;
+    z-index: 5;
+    left: 0%;
+    top: 0%;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    
+}
+.modal_over-lay{
+   animation-name: x;
+   animation-duration: 3s;
+}
+
+.closebtn{
+    color: #ccc;
+    float: right;
+    font-size: 30px;
+}
+.closebtn:hover{
+    cursor: pointer;
+    color: black;
+}
+
+
+        .post-item{
+            border: 2px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+ <!-- modal -->
+ <div class="modalcontainer" id="modalcontainer">
+    <!-- modal overlay -->
+        <div class="card text-center modal_over-lay mt-5">
+                  <div class="card-header" style="background-color: rgba(165, 113, 44, 0.767);">
+                      <span class="closebtn">&times;</span>
+                    Edit-card
+                   </div>
+                  <div class="card-body ">
+                    <h5 class="card-title">Are you sure you want to Edit your task ?</h5>
+                    <input type="text"  value="" id="input1" class="form-control" aria-label="Text input with checkbox"/>
+                    <input type="text"  value="" id="input2" class="form-control" aria-label="Text input with checkbox"/>
+                    <a href="#" id="edt" class="btn btn-primary editchange mt-4">Edit</a>
+                  </div>
+                  <div class="card-footer text-muted" style="background-color: rgba(165, 113, 44, 0.767);">
+                    your edit task
+            </div>
+        </div>
+  
+  </div>
+
+
+
+
+
+    <input type="text" name="" id="title">
+    <div>
+        <textarea name="" id="post-input" cols="30" rows="10"></textarea>
+    </div>
+    <button id="submit">SubmitPost</button> 
+    <button id="update">updatePost</button> 
+    <button id="delete">delete</button> 
+    
+
+    
+    <div id="root">
+
+    </div>
+    <script>
+let edit =document.querySelector('.editchange')
+
+
+var mainbox = document.getElementById("modalcontainer");
+var close = document.getElementsByClassName("closebtn")[0];
+
+        let submitBtn = document.getElementById('submit');
+        let updateBtn = document.getElementById('update');
+        let deleteBtn = document.getElementById('delete');
+             id=''
+
+        deleteBtn.addEventListener('click',() => {
+        deletePost("cdaa8aef-bbdc-488b-8d7c-58bae5e1e210");
+         })
+
+       
+
+
+      
+        submitBtn.addEventListener('click',() => {
+        let title = document.getElementById('title').value;
+        let post = document.getElementById('post-input').value;
+        console.log(title ,post + 'tests');
+           let newPost  = {
+               title,
+               post
+           }
+            createPost(newPost);
+        })
+      document.addEventListener('DOMContentLoaded',() => {
+          getPost();
+      })
+
+  function getPost(){
+    fetch('http://54.144.250.94/',{
+        method:"get",
+        }).then((data) => {
+            return data.json();
+        }).then((datajson) =>{
+          let root = document.getElementById('root');
+          for(data of datajson){
+             
+            root.innerHTML += `<div class='list'>
+                <div class="post-item"><h>${data.title}</h1>
+                <span id = 'span'>${data.id}</span>
+                              <span class="desc">${data.post}</span>
+                              <button  id="del" class="del">delete</button>
+                              <button  id="add" class="edit">edit</button>
+                             
+
+                              </div>
+                              </div>
+                              \n
+                              `}
+     
+
+            console.log(datajson);
+        })
+  }
+  
+    window.onclick=function(e){
+  if(e.target.classList.contains("del")){
+      let item = e.target.parentNode.childNodes[2].textContent;
+    console.log(item)
+    deletePost(item)
+    }
+
+    if(e.target.classList.contains('edit')){
+     id = e.target.parentNode.childNodes[2].textContent;
+     console.log(id)
+        mainbox.style.display='block'
+    }
+
+    if(e.target.classList.contains('editchange')){
+      let tit =document.getElementById('input1').value;
+let post =document.getElementById('input2').value;
+let updatedPost = {
+    id,
+    tit,
+    post
+}
+console.log(id );
+updatePost(updatedPost);
+mainbox.style.display='none'
+    }
+}
+
+// edit.addEventListener('click' ,()=>{
+         
+// let title = document.getElementById('input1').value;
+// let post = document.getElementById('input2').value;
+// let updatedPost = {
+//     id,
+//     title,
+//     post
+// }
+// console.log(id );
+// updatePost(updatedPost);
+    
+
+// mainbox.style.display='none'
+// })
+
+function deletePost(item){
+      fetch(`http://54.144.250.94/${item}`,{
+        method:"delete",
+        }).then((data) => {
+            return data;
+        })
+  }
+
+  function createPost(post){
+      console.log(post);
+    fetch('http://54.144.250.94/',{
+        method:"post",
+        headers: {
+      'Content-Type': 'application/json'
+    },
+       body:JSON.stringify(post)
+        }).then((data) => {
+            return data.json(); 
+        }).then((datajson) =>{
+          
+
+            console.log(datajson);
+        })
+    
+  }
+
+  function updatePost(post){
+      console.log(post);
+    fetch('http://54.144.250.94/',{
+        method:"put",
+        headers: {
+      'Content-Type': 'application/json'
+    },
+       body:JSON.stringify(post)
+        }).then((data) => {
+            return data;
+        })
+    
+  }
+    </script>
+</body>
+</html>
