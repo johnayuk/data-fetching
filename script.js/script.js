@@ -7,9 +7,7 @@ var close = document.getElementsByClassName("closebtn")[0];
 var close2 = document.getElementsByClassName("closebtn2")[0];
 let openup = document.getElementById('openup');
 
-// openup.addEventListener('click' ,() =>{
 
-// })
 
 close.addEventListener('click',()=>{
     mainbox.style.display='none';
@@ -53,7 +51,7 @@ close2.addEventListener('click',()=>{
       })
 
   function getPost(){
-    fetch('http://54.144.250.94/',{
+    fetch('https://cors-anywhere.herokuapp.com/http://54.144.250.94/',{
         method:"get",
         }).then((data) => {
             return data.json();
@@ -142,7 +140,7 @@ mainbox.style.display='none'
 // })
 
 function deletePost(item){
-      fetch(`http://54.144.250.94/${item}`,{
+      fetch(`https://cors-anywhere.herokuapp.com/http://54.144.250.94/${item}`,{
         method:"delete",
         }).then((data) => {
             return data;
@@ -151,7 +149,7 @@ function deletePost(item){
 
   function createPost(post){
       console.log(post);
-    fetch('http://54.144.250.94/',{
+    fetch('https://cors-anywhere.herokuapp.com/http://54.144.250.94/',{
         method:"post",
         headers: {
       'Content-Type': 'application/json'
@@ -169,7 +167,7 @@ function deletePost(item){
 
   function updatePost(post){
       console.log(post);
-    fetch('http://54.144.250.94/',{
+    fetch('https://cors-anywhere.herokuapp.com/http://54.144.250.94/',{
         method:"put",
         headers: {
       'Content-Type': 'application/json'
